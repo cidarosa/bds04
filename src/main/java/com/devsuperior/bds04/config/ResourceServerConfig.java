@@ -26,13 +26,18 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 	
 	//configurar as rotas
 	//GET
-	private static final String[] PUBLIC = {"/oauth/token", "/h2-console/**", "/events/**", "/cities/**"}; //todos podem acessar
+	private static final String[] PUBLIC = {"/oauth/token", "/h2-console/**"}; //todos podem acessar
 	
-	//Rotas para operador ou admin
+	//Rotas para client ou admin
 	private static final String[] CLIENT_POST = {"/events/**"};
 	
+	//Rotas para client ou admin
+	//private static final String[] CLIENT_ADMIN = {"/events/**", "/cities/**"};
+	
+	
+	
 	//Rotas somente para admin
-	//private static final String[] ADMIN = {"/users/**"};
+	//private static final String[] ADMIN = {"/events/**", "/cities/**"};
 	
 	@Override
 	public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
@@ -50,6 +55,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 		//configurando quem pode acessar o que
 		http.authorizeRequests()
 		.antMatchers(PUBLIC).permitAll()
+		.antMatchers(HttpMethod.GET).permitAll()
 		.antMatchers(HttpMethod.POST, CLIENT_POST).hasAnyRole("CLIENT", "ADMIN")//tá no DB
 		.anyRequest().hasAnyRole("ADMIN"); //qq outra exige autenticação
 	}
