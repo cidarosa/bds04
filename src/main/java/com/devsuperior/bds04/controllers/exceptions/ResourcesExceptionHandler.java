@@ -15,7 +15,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class ResourcesExceptionHandler {
 
 	@ExceptionHandler(MethodArgumentNotValidException.class)
-	public ResponseEntity<ValidationError> validation(MethodArgumentNotValidException e, HttpServletRequest request) {
+	public ResponseEntity<ValidationError> validation(MethodArgumentNotValidException e, 
+			HttpServletRequest request) {
 
 		HttpStatus status = HttpStatus.UNPROCESSABLE_ENTITY; // código 422
 		ValidationError err = new ValidationError();
